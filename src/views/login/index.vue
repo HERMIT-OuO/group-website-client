@@ -138,6 +138,7 @@
 </template>
 
 <script>
+import { login }  from '@/api/user'
 export default {
     components: {},
     data() {
@@ -196,13 +197,33 @@ export default {
                     // 若输入为空
                     this.$Message.error("请输入用户名或密码！");
                 } else {
-                    console.log(this.loginForm);
+                    const that = this;
+                    const data = {
+                        userName: that.loginForm.userName,
+                        password: that.loginForm.password,
+                        loginFlag: 1
+                    };
+                    login(data).then(res => {
+                        // 发送请求
+                        console.log(res);
+                    })
                 }
             } else if (this.flag === 1) {
                 // 验证码登录
                 if(this.checkPE() !== false) {
                     if(this.loginForm.userCode !== ''){
-                        console.log(this.loginForm);
+                        // 通过验证
+                        const that = this;
+                        const data = {
+                            userEmail: that.loginForm.userEmail,
+                            userPhone: that.loginForm.userPhone,
+                            loginFlag: 2,
+                            captcha: that.loginForm.userCode
+                        }
+                        login(data).then(res => {
+                            // 发送请求
+                            console.log(res);
+                        })
                     }else {
                         this.$Message.error("请输入验证码！");
                     }
@@ -213,15 +234,18 @@ export default {
             } 
         },
         checkPE() {
+            // 正则校验 Phone or Email 
             const PHONE = /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/;
             const EMAIL = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             if (PHONE.test(this.loginForm.userTemp)) {
                 // 手机号
                 this.loginForm.userPhone = this.loginForm.userTemp;
+                this.loginForm.userEmail = "";
                 return "phone";
             } else if (EMAIL.test(this.loginForm.userTemp)) {
                 // 邮箱
                 this.loginForm.userEmail = this.loginForm.userTemp;
+                this.loginForm.userPhone = "";
                 return "email";
             } else {
                 // 不通过
@@ -241,8 +265,9 @@ a {
     flex-direction: column;
     align-items: center;
 
+    min-height: 100%;
 
-    background: #f5f7f9;
+    background: #f4f4f4;
     /* background: url("../../assets/login/backgroud.jpg") fixed ;
     background-size: cover; */
 }

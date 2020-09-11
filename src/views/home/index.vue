@@ -1,83 +1,60 @@
 <template>
     <div class="index">
         <div class="index-content-carousel">
-                <!-- 轮播图 -->
-                <Carousel
-                    autoplay
-                    :autoplay-speed="3000"
-                    v-model="carIndex"
-                    loop
-                    dots="outside"
-                >
-                    <CarouselItem>
-                        <div class="demo-carousel">1</div>
-                    </CarouselItem>
-                    <CarouselItem>
-                        <div class="demo-carousel">2</div>
-                    </CarouselItem>
-                    <CarouselItem>
-                        <div class="demo-carousel">3</div>
-                    </CarouselItem>
-                    <CarouselItem>
-                        <div class="demo-carousel">4</div>
-                    </CarouselItem>
-                </Carousel>
-            </div>
-            <div>
-                <!-- 页面 -->
+            <!-- 轮播图 -->
+            <Carousel
+                autoplay
+                :autoplay-speed="3000"
+                v-model="carIndex"
+                loop
+                dots="outside"
+            >
+                <CarouselItem>
+                    <div class="demo-carousel">1</div>
+                </CarouselItem>
+                <CarouselItem>
+                    <div class="demo-carousel">2</div>
+                </CarouselItem>
+                <CarouselItem>
+                    <div class="demo-carousel">3</div>
+                </CarouselItem>
+                <CarouselItem>
+                    <div class="demo-carousel">4</div>
+                </CarouselItem>
+            </Carousel>
+        </div>
+        <div>
+            <!-- 页面 -->
+            <div class="index-content-blog">
+                <div class="index-content-blog-title">最新博客</div>
+                <Card v-for="item in 3" :key="item"  class="index-content-blog-card" :bordered="false">
+                    <div class="index-content-blog-card-div">
+                        <div class="index-content-blog-card-left">
+                            <div class="index-content-blog-card-title">
+                                <router-link
+                                    class="index-content-blog-card-title"
+                                    to="/"
+                                    >{{ blog.title }}</router-link
+                                >
+                            </div>
+                            <div class="index-content-blog-card-content">
+                                {{ cutContent(blog.content) }}
+                            </div>
+                        </div>
+                        <div class="index-content-blog-card-right">
+                            <div class="index-content-blog-card-author">
+                                {{ blog.author }}
+                            </div>
+                            <div class="index-content-blog-card-time">
+                                {{ blog.time }}
+                            </div>
+                        </div>
+                    </div>
+                </Card>
             </div>
             <div class="index-content-blog">
-                <!-- 最新博客 -->
-                <div class="index-content-blog-title">最新博客</div>
-                <Card class="index-content-blog-card" :bordered="false">
-                    <div class="index-content-blog-card-div">
-                        <div class="index-content-blog-card-left">
-                            <div class="index-content-blog-card-title">
-                                <router-link
-                                    class="index-content-blog-card-title"
-                                    to="/"
-                                    >{{ blog.title }}</router-link
-                                >
-                            </div>
-                            <div class="index-content-blog-card-content">
-                                {{ cutContent(blog.content) }}
-                            </div>
-                        </div>
-                        <div class="index-content-blog-card-right">
-                            <div class="index-content-blog-card-author">
-                                {{ blog.author }}
-                            </div>
-                            <div class="index-content-blog-card-time">
-                                {{ blog.time }}
-                            </div>
-                        </div>
-                    </div>
-                </Card>
-                <Card class="index-content-blog-card" :bordered="false">
-                    <div class="index-content-blog-card-div">
-                        <div class="index-content-blog-card-left">
-                            <div class="index-content-blog-card-title">
-                                <router-link
-                                    class="index-content-blog-card-title"
-                                    to="/"
-                                    >{{ blog.title }}</router-link
-                                >
-                            </div>
-                            <div class="index-content-blog-card-content">
-                                {{ cutContent(blog.content) }}
-                            </div>
-                        </div>
-                        <div class="index-content-blog-card-right">
-                            <div class="index-content-blog-card-author">
-                                {{ blog.author }}
-                            </div>
-                            <div class="index-content-blog-card-time">
-                                {{ blog.time }}
-                            </div>
-                        </div>
-                    </div>
-                </Card>
-                <Card class="index-content-blog-card" :bordered="false">
+                <div class="index-content-blog-title">新闻动态</div>
+                <Card v-for="item in 3" :key="item" class="index-content-blog-card" :bordered="false">
                     <div class="index-content-blog-card-div">
                         <div class="index-content-blog-card-left">
                             <div class="index-content-blog-card-title">
@@ -125,10 +102,6 @@ export default {
     created() {},
     mounted() {},
     methods: {
-        goToView(view) {
-            // 导航栏跳转
-            this.$router.push(view);
-        },
         cutContent(text) {
             // 裁剪 blog 内容
             if (text.length >= 80) {
@@ -145,15 +118,10 @@ export default {
 .index {
     display: flex;
     flex-direction: column;
-
-    border-radius: 4px;
-    overflow: hidden;
-
-    background: #f5f7f9;
 }
 
 .index-content-carousel {
-    margin-top: 1rem;
+    margin-top: 3rem;
 }
 
 .index-content-blog {
@@ -171,7 +139,7 @@ export default {
 }
 
 .index-content-blog-card {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .index-content-blog-card-div {
